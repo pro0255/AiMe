@@ -1,28 +1,26 @@
-from enum import Enum
 import uvicorn
 import secrets
 
-
-from pydantic import BaseModel
 from fastapi import FastAPI, Request, Response, Depends
 
+from pydantic import BaseModel
+from db.db import MessageType
+
+from chat.factory import create_chat_entity
+from service.service import Service
+
 app = FastAPI()
+service = Service(create_chat_entity())
 TOKEN_SYMBOL = "TOKEN_SYMBOL"
+
 
 
 class AskMessage(BaseModel):
     content: str
 
-
-class MessageType(str, Enum):
-    ai = "ai"
-    client = "client"
-
-
-class HistoryMessage(BaseModel):
-    content: str
+class HistoryMessage(AskMessage):
     type: MessageType
-
+    
 
 def create_new_user_token():
     return secrets.token_hex(32)
@@ -49,8 +47,7 @@ async def root():
 # Docs: Client sends message to server, server process it calls openai api and returns ai-messages to client
 @app.put("/ask/")
 async def ask(message: AskMessage, token: str = Depends(create_cookie)):
-    print(f"Asking {message} {token}")
-    return f"This is ask message {message}"
+    return service.respond(message.content, token)
 
 
 # Set Conversation
@@ -60,8 +57,8 @@ async def ask(message: AskMessage, token: str = Depends(create_cookie)):
 @app.put("/set-conversation/")
 async def set_context(
     history: list[HistoryMessage], token: str = Depends(create_cookie)
-):
-    return f"Setting a specific context {len(history)}"
+):  
+    service.set_conversation(history, token)
 
 
 # Reset Conversation
@@ -70,7 +67,7 @@ async def set_context(
 # Docs: Doing a reset of history on server
 @app.put("/reset-conversation/")
 async def reset_context(token: str = Depends(create_cookie)):
-    return f"Reseting a existing context"
+    service.reset_conversation(token)
 
 
 if __name__ == "__main__":
