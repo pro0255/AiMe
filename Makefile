@@ -4,18 +4,22 @@ VENV = env
 save:
 	pip freeze > requirements.txt
 
-virtualenv:
+env:
 	python3 -m venv $(VENV)
 
-activate:
-	source $(VENV)/bin/activate
+activate: $(VENV)/bin/activate
+	. $(VENV)/bin/activate
 
 install:
 	pip install -r requirements.txt
 
-run-server: virtualenv activate install
+run-server: env activate install
 	uvicorn api:app --reload
 
-run-server-debug: virtualenv activate install
+run-server-debug: env activate install
 	uvicorn api:app --reload
 
+clean:
+	rm -rf $(VENV)
+	find . -type f -name *.pyc -delete
+	find . -type d -name __pycache__ -delete

@@ -1,10 +1,15 @@
 # AiMe
 
+# Troubleshoot
 
-# Conversation history
+`
+INFO:     Will watch for changes in these directories: ['/Users/Vojtech.Prokop/Desktop/Projects/Personal/Python/AiMe']
+ERROR:    [Errno 48] Address already in use
+make: *** [run-server] Error 1
+`
 
-- https://www.pinecone.io/learn/series/langchain/langchain-conversational-memory/
-- https://python.langchain.com/docs/modules/memory/types/buffer
+It's because the defined port is used by background process. We need to kill it.
 
-
-- Versioning of API - https://medium.com/arionkoder-engineering/fastapi-versioning-e9f86ace52ca
+- Run `ps -a | grep python | grep uvicorn`
+- Read the first number example: "68108 ttys003" -> `68108`
+- Run `kill -9 68108`
