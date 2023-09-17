@@ -7,8 +7,11 @@ from pydantic import BaseModel
 from db.db import MessageType
 
 from chat.factory import create_chat_entity
-from service.service import Service
+from service.service import ResponseDebugMessage, ResponseMessage, Service
+from dotenv import load_dotenv
 
+
+load_dotenv()
 app = FastAPI()
 service = Service(create_chat_entity())
 TOKEN_SYMBOL = "TOKEN_SYMBOL"
@@ -45,7 +48,7 @@ async def root():
 # - Input: message from client
 # - Output: message from ai
 # Docs: Client sends message to server, server process it calls openai api and returns ai-messages to client
-@app.put("/ask/")
+@app.put("/ask/", response_model=ResponseMessage | ResponseDebugMessage)
 async def ask(message: AskMessage, token: str = Depends(create_cookie)):
     return service.respond(message.content, token)
 

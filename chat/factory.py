@@ -3,6 +3,8 @@ import os
 
 def create_chat_entity():
     env_value = os.getenv("CHAT_ENTITY")
+    
+    print(env_value)
 
     if env_value == "openai":
         from chat.open_ai import OpenAI

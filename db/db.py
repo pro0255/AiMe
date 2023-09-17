@@ -10,6 +10,9 @@ class MessageType(str, Enum):
 class DBMessage(BaseModel):
     type: MessageType
     content: str
+    
+    def __str__(self) -> str:
+        return f"Type={self.type}, Content=${self.content}"
 
 
 class MemoryDatabase:
