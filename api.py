@@ -4,10 +4,10 @@ import secrets
 from fastapi import FastAPI, Request, Response, Depends
 
 from pydantic import BaseModel
-from db.db import MessageType
+from src.db.db import MessageType
 
-from chat.factory import create_chat_entity
-from service.service import ResponseDebugMessage, ResponseMessage, Service
+from src.chat.factory import create_chat_entity
+from src.service.service import ResponseDebugMessage, ResponseMessage, Service
 from dotenv import load_dotenv
 
 

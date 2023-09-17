@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from db.db import MessageType
+from src.db.db import MessageType
 
 
 class AskMessage(BaseModel):

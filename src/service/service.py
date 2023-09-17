@@ -1,9 +1,9 @@
 import os
-from chat.boilerplate_ai import AI
-from db.messages import MessagesModel
-from db.user import UserModel
+from src.chat.boilerplate_ai import AI
+from src.db.messages import MessagesModel
+from src.db.user import UserModel
 from pydantic import BaseModel
-from db.db import DBMessage, MessageType
+from src.db.db import DBMessage, MessageType
 
 
 class AskMessage(BaseModel):

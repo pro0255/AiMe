@@ -1,4 +1,4 @@
-from db.db import DBMessage, db_instance
+from src.db.db import DBMessage, db_instance
 
 
 class MessagesModel:

@@ -1,4 +1,4 @@
-from db.db import db_instance
+from src.db.db import db_instance
 
 
 class UserModel:

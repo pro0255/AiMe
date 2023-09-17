@@ -1,5 +1,5 @@
-from chat.boilerplate_ai import AI
-from db.db import DBMessage
+from src.chat.boilerplate_ai import AI
+from src.db.db import DBMessage
 
 
 class OpenAI(AI):

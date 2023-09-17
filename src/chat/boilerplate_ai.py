@@ -1,4 +1,4 @@
-from db.db import DBMessage
+from src.db.db import DBMessage
 
 
 class AI:

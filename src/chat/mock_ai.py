@@ -1,5 +1,5 @@
-from chat.boilerplate_ai import AI
-from db.db import DBMessage
+from src.chat.boilerplate_ai import AI
+from src.db.db import DBMessage
 from faker import Faker
 
 faker = Faker(locale="en_US")
