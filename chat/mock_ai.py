@@ -3,12 +3,5 @@ from db.db import DBMessage
 
 
 class MockAI(AI):
-  def respond(self, message_content: str, history: list[DBMessage] = []) -> str:
-    return ""
-  
-  
-  
-    
-  
-  
-  
+    def respond(self, message_content: str, history: list[DBMessage] = []) -> str:
+        return ""

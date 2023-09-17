@@ -14,13 +14,13 @@ service = Service(create_chat_entity())
 TOKEN_SYMBOL = "TOKEN_SYMBOL"
 
 
-
 class AskMessage(BaseModel):
     content: str
 
+
 class HistoryMessage(AskMessage):
     type: MessageType
-    
+
 
 def create_new_user_token():
     return secrets.token_hex(32)
@@ -57,7 +57,7 @@ async def ask(message: AskMessage, token: str = Depends(create_cookie)):
 @app.put("/set-conversation/")
 async def set_context(
     history: list[HistoryMessage], token: str = Depends(create_cookie)
-):  
+):
     service.set_conversation(history, token)
 
 
