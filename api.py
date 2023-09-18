@@ -11,8 +11,28 @@ from src.service.service import ResponseDebugMessage, ResponseMessage, Service
 from dotenv import load_dotenv
 
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
+# TODO: add dev | prod difference
+origins = [
+    "http://localhost:3000",
+]
+
+
+
 load_dotenv()
+
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 service = Service(create_chat_entity())
 TOKEN_SYMBOL = "TOKEN_SYMBOL"
 
@@ -36,6 +56,8 @@ def create_cookie(response: Response, request: Request):
 
     token = create_new_user_token()
     response.set_cookie(key=TOKEN_SYMBOL, value=token)
+    
+    print(token)
     return token
 
 
@@ -50,6 +72,7 @@ async def root():
 # Docs: Client sends message to server, server process it calls openai api and returns ai-messages to client
 @app.put("/ask/", response_model=ResponseMessage | ResponseDebugMessage)
 async def ask(message: AskMessage, token: str = Depends(create_cookie)):
+    print("Message", message)
     return service.respond(message.content, token)
 
 

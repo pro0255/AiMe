@@ -13,10 +13,10 @@ activate: $(VENV)/bin/activate
 install:
 	pip install -r requirements.txt
 
-run-server: env activate install
+run: env activate install
 	uvicorn api:app --reload
 
-run-server-debug: env activate install
+run-debug: env activate install
 	uvicorn api:app --reload
 
 clean:
