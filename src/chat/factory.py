@@ -13,7 +13,7 @@ def create_chat_entity():
     elif env_value == "mock":
         from src.chat.mock_ai import MockAI
 
-        return MockAI()
+        return MockAI() 
     else:
         from src.chat.debug_ai import DebugAI
 

@@ -24,7 +24,6 @@ clean:
 	find . -type f -name *.pyc -delete
 	find . -type d -name __pycache__ -delete
 
-
 format:
 	black src/*
 	isort src/*
