@@ -1,8 +1,7 @@
 from enum import Enum
 
-from pydantic import BaseModel
 from expiring_dict import ExpiringDict
-
+from pydantic import BaseModel
 
 TTL_TIME = 60 * 15
 
