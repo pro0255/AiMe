@@ -1,6 +1,10 @@
 from enum import Enum
 
 from pydantic import BaseModel
+from expiring_dict import ExpiringDict
+
+
+TTL_TIME = 60 * 15
 
 
 class MessageType(str, Enum):
@@ -18,7 +22,7 @@ class DBMessage(BaseModel):
 
 class MemoryDatabase:
     def __init__(self):
-        self.db: dict[str, list[DBMessage]] = {}
+        self.db: dict[str, list[DBMessage]] = ExpiringDict(TTL_TIME)
 
 
 db_instance = MemoryDatabase()
