@@ -72,7 +72,6 @@ async def root():
 # Docs: Client sends message to server, server process it calls openai api and returns ai-messages to client
 @app.put("/ask/", response_model=ResponseMessage | ResponseDebugMessage)
 async def ask(message: AskMessage, token: str = Depends(create_cookie)):
-    print("Message", message)
     return service.respond(message.content, token)
 
 
