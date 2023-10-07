@@ -46,6 +46,7 @@ class HistoryMessage(AskMessage):
 
 
 def create_new_user_token():
+    print("Creating a new token")
     return secrets.token_hex(32)
 
 
@@ -55,7 +56,7 @@ def create_cookie(response: Response, request: Request):
         return request_cookie_token
 
     token = create_new_user_token()
-    response.set_cookie(key=TOKEN_SYMBOL, value=token)
+    response.set_cookie(key=TOKEN_SYMBOL, value=token, samesite="none", secure=True, httponly=True)
     
     print(token)
     return token
