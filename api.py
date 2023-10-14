@@ -1,27 +1,24 @@
-import uvicorn
-import secrets
 import os
+import secrets
 
-from fastapi import FastAPI, Request, Response, Depends
-
-from pydantic import BaseModel
-from production_guard import production_guard
-from src.db.db import MessageType
-
-from src.chat.factory import create_chat_entity
-from src.service.service import ResponseDebugMessage, ResponseMessage, Service
+import uvicorn
 from dotenv import load_dotenv
-
-
+from fastapi import Depends, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
+from production_guard import production_guard
+from src.chat.factory import create_chat_entity
+from src.db.db import MessageType
+from src.service.service import ResponseDebugMessage, ResponseMessage, Service
 
 load_dotenv()
 production_guard()
 
+
 def parseOrigins():
     origins = os.getenv("ORIGINS")
-    return origins.split(';')    
+    return origins.split(";")
 
 
 origins = parseOrigins()
@@ -59,8 +56,10 @@ def create_cookie(response: Response, request: Request):
         return request_cookie_token
 
     token = create_new_user_token()
-    response.set_cookie(key=TOKEN_SYMBOL, value=token, samesite="none", secure=True, httponly=True)
-    
+    response.set_cookie(
+        key=TOKEN_SYMBOL, value=token, samesite="none", secure=True, httponly=True
+    )
+
     print(token)
     return token
 

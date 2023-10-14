@@ -27,3 +27,6 @@ clean:
 format:
 	black src/*
 	isort src/*
+	black api.py production_guard.py
+	isort api.py production_guard.py
+	
