@@ -1,9 +1,11 @@
 import uvicorn
 import secrets
+import os
 
 from fastapi import FastAPI, Request, Response, Depends
 
 from pydantic import BaseModel
+from production_guard import production_guard
 from src.db.db import MessageType
 
 from src.chat.factory import create_chat_entity
@@ -14,14 +16,15 @@ from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 
 
-# TODO: add dev | prod difference
-origins = [
-    "http://localhost:3000",
-]
-
-
-
 load_dotenv()
+production_guard()
+
+def parseOrigins():
+    origins = os.getenv("ORIGINS")
+    return origins.split(';')    
+
+
+origins = parseOrigins()
 
 app = FastAPI()
 app.add_middleware(
