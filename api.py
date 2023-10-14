@@ -18,10 +18,18 @@ production_guard()
 
 def parseOrigins():
     origins = os.getenv("ORIGINS")
-    return origins.split(";")
+    
+    if(origins is not None):
+        return origins.split(";")
+    
+    return ['*']
+        
+        
 
 
 origins = parseOrigins()
+
+print(origins)
 
 app = FastAPI()
 app.add_middleware(
